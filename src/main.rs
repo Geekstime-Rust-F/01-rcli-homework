@@ -1,7 +1,7 @@
-use clap::{command, Args, Parser, Subcommand};
 use anyhow::Result;
+use clap::{command, Args, Parser, Subcommand};
 mod process;
-use process::process_text_encrypt;
+use process::TextEncryptAndDecrypt;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -13,7 +13,7 @@ struct Cli {
 #[derive(Subcommand)]
 enum CliSubCommand {
     #[command(subcommand)]
-    Text(TextSubCommand)
+    Text(TextSubCommand),
 }
 
 #[derive(Subcommand)]
@@ -39,15 +39,13 @@ fn main() -> Result<()> {
 
     match cli.command {
         CliSubCommand::Text(text_subcommand) => {
+            let text_encypt_and_decrypt = TextEncryptAndDecrypt::new();
             match text_subcommand {
                 TextSubCommand::Encrypt(text_encrypt_params) => {
-                    let key = text_encrypt_params.key;
-                    process_text_encrypt(&key)
+                    text_encypt_and_decrypt.process_text_encrypt(&text_encrypt_params.key)
                 }
                 TextSubCommand::Decrypt(text_decrypt_params) => {
-                    let key = text_decrypt_params.key;
-                    println!("key: {}", key);
-                    Ok(())
+                    text_encypt_and_decrypt.process_text_decrypt(&text_decrypt_params.key)
                 }
             }
         }
