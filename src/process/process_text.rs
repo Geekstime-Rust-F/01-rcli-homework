@@ -29,6 +29,12 @@ impl TextEncryptAndDecrypt {
     }
 }
 
+impl Default for TextEncryptAndDecrypt {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl TextEncryptAndDecrypt {
     pub fn process_text_encrypt(self, key: &str) -> Result<()> {
         let key = key.as_bytes().into();
