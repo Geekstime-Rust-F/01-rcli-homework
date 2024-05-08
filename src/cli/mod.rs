@@ -1,7 +1,10 @@
+mod jwt;
 mod text;
 
+pub use jwt::*;
+pub use text::*;
+
 use clap::{command, Parser, Subcommand};
-pub use text::TextSubCommand;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -14,4 +17,7 @@ pub struct Cli {
 pub enum CliSubCommand {
     #[command(subcommand)]
     Text(TextSubCommand),
+
+    #[command(subcommand)]
+    Jwt(JwtSubCommand),
 }
