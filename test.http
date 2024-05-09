@@ -1,0 +1,5 @@
+### Test static files with tower-http
+GET http://localhost:3000/tower/Cargo.toml
+
+### Test directory with tower-http
+GET http://localhost:3000/src

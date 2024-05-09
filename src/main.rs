@@ -1,11 +1,12 @@
 use anyhow::Result;
 use clap::Parser;
 use rcli::{
-    process_jwt_sign, process_jwt_verify, Cli, CliSubCommand, JwtSubCommand, TextEncryptAndDecrypt,
-    TextSubCommand,
+    process_http_serve, process_jwt_sign, process_jwt_verify, Cli, CliSubCommand, HttpSubCommand,
+    JwtSubCommand, TextEncryptAndDecrypt, TextSubCommand,
 };
 
-fn main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
@@ -28,6 +29,11 @@ fn main() -> Result<()> {
             ),
             JwtSubCommand::Verify(jwt_verify_params) => {
                 process_jwt_verify(&jwt_verify_params.token)
+            }
+        },
+        CliSubCommand::Http(http_subcommand) => match http_subcommand {
+            HttpSubCommand::Serve(http_serve_params) => {
+                process_http_serve(&http_serve_params.dir).await
             }
         },
     }

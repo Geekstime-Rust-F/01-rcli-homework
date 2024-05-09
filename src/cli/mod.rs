@@ -1,6 +1,8 @@
+mod http;
 mod jwt;
 mod text;
 
+pub use http::*;
 pub use jwt::*;
 pub use text::*;
 
@@ -20,4 +22,7 @@ pub enum CliSubCommand {
 
     #[command(subcommand)]
     Jwt(JwtSubCommand),
+
+    #[command(subcommand)]
+    Http(HttpSubCommand),
 }
